@@ -32,62 +32,84 @@ const createEnrollment = async() => {
     const enrollment_06 = await enrollmentController.addUser(3, 4)
 }
 
-// Function to execute user queries
-const userQuery = async() => {
-    // Find a user by ID and print the result
-    const query_01 = await userController.findUserById(1)
-    console.log(JSON.stringify(query_01, null, 4))
-
-    // Find all users with their associated bootcamps and print the result
-    const query_02 = await userController.findUserAll()
-    console.log(JSON.stringify(query_02, null, 4))
-
-    // New user information to update
-    const updatedUserInformation = { firstName: 'Pedro', lastName: 'Sánchez' };
-    // Update a user by ID and print the result if successful
-    const query_03 = await userController.updateUserById(1, updatedUserInformation)
-    if (query_03) {
-        // If the update was successful, print the new value of the user
-        console.log('New value of user with ID 1:', updatedUserInfo);
+// Function to query a user by ID, including the Bootcamps he or she is enrolled in
+const findUserByIdWithBootcamp = async() => {
+    // Defines the user ID (replace '1' with the desired user ID)
+    const userId = 1; // Replace 1 with the ID of the user you want to search for
+    // Call the 'findUserById' function from the user controller to get the user by its ID
+    const user = await userController.findUserById(userId);
+    if (!user) {
+        // If the user is not found, print a message indicating that it was not found
+        console.log(`User with ID ${userId} not found.`);
     } else {
-        console.log('Failed to update user with ID 1');
-    }
-
-    // Delete a user by ID and print the result
-    const query_04 = await userController.deleteUserById(1);
-    if (query_04) {
-        // If at least one row was deleted, print the message
-        console.log('User with ID 1 was deleted successfully.');
-    } else {
-        // If no rows were deleted, print the message
-        console.log('Failed to delete user with ID 1.');
+        // Find a user by ID and print the result
+        console.log("User with associated bootcamps:");
+        console.log(JSON.stringify(user, null, 4));
     }
 }
 
-const bootcampQuery = async() => {
+//Function to consult all users with their Bootcamp
+const findAllUsersWithBootcamp = async() => {
+    // Find all users with their associated bootcamps and print the result
+    const query_02 = await userController.findUserAll()
+    console.log(JSON.stringify(query_02, null, 4))
+}
 
+// Function to update the user according to his or her id; for example: update the user with id=1 by Pedro Sánchez
+const updatedUserInformation = async() => {
+    const userId = 1; // Replace 1 with the ID of the user you want to search for update
+    const updatedUserInformation = { firstName: 'Pedro', lastName: 'Sánchez' }; // New user information to update
+    // Update a user by ID and print the result if successful
+    const query_03 = await userController.updateUserById(userId, updatedUserInformation)
+    if (query_03) {
+        // If the update was successful, print the new value of the user
+        console.log(`New value of user with ID ${userId}: `, updatedUserInfo);
+    } else {
+        console.log(`Failed to update user with ID ${userId}`);
+    }
+}
+
+// Function to delete a user by id: for example: the user with id=1
+const deleteUserById = async() => {
+    const userId = 1; // Replace 1 with the ID of the user you want to delete
+    // Delete a user by ID and print the result
+    const query_04 = await userController.deleteUserById(userId);
+    if (query_04) {
+        // If at least one row was deleted, print the message
+        console.log(`User with ID ${userId} was deleted successfully.`);
+    } else {
+        // If no rows were deleted, print the message
+        console.log(`Failed to delete user with ID ${userId}.`);
+    }
+}
+
+// Function to query the Bootcamp by id, including its users
+const findBootcampByIdWithUsers = async() => {
     // Define the bootcamp ID to query (replace '1' with the desired bootcamp ID)
     const bootcampId = 1;
     // Call the 'findById' function from the bootcamp controller to get the bootcamp by its ID
-    const query_01 = await bootcampController.findById(bootcampId);
-    if (query_01) {
+    const query_05 = await bootcampController.findById(bootcampId);
+    if (query_05) {
         // If the bootcamp is found, print its information and the number of users enrolled
         console.log(`Bootcamp with ID ${bootcampId}:`);
         // Print the bootcamp information with indentation for readability
-        console.log(JSON.stringify(query_01, null, 4));
+        console.log(JSON.stringify(query_05, null, 4));
         // Print number of users for bootcamp
-        console.log(`Number of users enrolled: ${query_01.numUsersEnrolled}`);
+        console.log(`The number of users enrolled is: ${query_05.numUsersEnrolled}`);
     } else {
         // If the bootcamp is not found, print a message indicating that it was not found
-        console.log(`Bootcamp with ID ${bootcampId} not found.`);
+        console.log(`Bootcamp with ID ${bootcampId} is not found.`);
     }
+}
 
+// Function to consult all Bootcamps, including their users
+const findAllBootcampWithUsers = async() => {
     // Call the 'findAll' function from the bootcamp controller to get all bootcamps with their associated users
-    const query_02 = await bootcampController.findAll();
-    if (query_02) {
+    const query_06 = await bootcampController.findAll();
+    if (query_06) {
         // If bootcamps are found, print their information
         console.log('All bootcamps with associated users:');
-        console.log(JSON.stringify(query_02, null, 4));
+        console.log(JSON.stringify(query_06, null, 4));
     } else {
         console.log('No bootcamps found.');
     }
@@ -95,11 +117,15 @@ const bootcampQuery = async() => {
 
 // Synchronize the database and execute the queries
 db.conexion.sync().then(() => {
-    createUser()
-    createBootcamp()
-    createEnrollment()
-    userQuery()
-    bootcampQuery()
+    createUser();
+    createBootcamp();
+    createEnrollment();
+    findUserByIdWithBootcamp();
+    findAllUsersWithBootcamp();
+    updatedUserInformation();
+    deleteUserById();
+    findBootcampByIdWithUsers();
+    findAllBootcampWithUsers()
 })
 
 /*
@@ -126,14 +152,16 @@ Introduciendo El Bootcamp De React. Mateo Díaz Santiago Mejías
 Bootcamp Desarrollo Web Full Stack. Mateo Díaz
 Bootcamp Big Data, Inteligencia Artificial & Machine Learning. Mateo Díaz Santiago Mejías Lucas Rojas
 
-4. Consultar usuarios
-4.1. Consultar un usuario por id, incluyendo los Bootcamp
-4.2. Consultar todos los usuario con sus Bootcamp
-4.3. Actualizar el usuario según su id; por ejemplo: actualizar el usuario con id=1 por Pedro Sánchez
-4.4. Eliminar un usuario por id: por ejemplo: el usuario con id=1
+4. Consultar un usuario por id, incluyendo los Bootcamp
 
-5. Consultar Bootcamp
-5.1. Consultar el Bootcamp por id, incluyendo los usuarios
-5.2. Consultar todos los Bootcamps con sus Usuarios
+5. Consultar todos los usuario con sus Bootcamp
+
+6. Actualizar el usuario según su id; por ejemplo: actualizar el usuario con id=1 por Pedro Sánchez
+
+7. Eliminar un usuario por id: por ejemplo: el usuario con id=1
+
+8. Consultar el Bootcamp por id, incluyendo los usuarios
+
+9. Consultar todos los Bootcamps con sus Usuarios
 
 */
