@@ -1,0 +1,24 @@
+{
+    "name": "final-drilling-modulo07-bootcampjs",
+    "version": "1.0.0",
+    "description": "Proyecto Final del Módulo 07 Bootcamp Desarrollo de Aplicaciones Full Stack JavaScript Trainee V2.0: Acceso a Datos en Aplicaciones Node",
+    "main": "server.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Isabel-de-la-Cuadra/Final-Drilling-Modulo07-BootcampJS.git"
+    },
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/Isabel-de-la-Cuadra/Final-Drilling-Modulo07-BootcampJS/issues"
+    },
+    "homepage": "https://github.com/Isabel-de-la-Cuadra/Final-Drilling-Modulo07-BootcampJS#readme",
+    "dependencies": {
+        "pg": "^8.11.1",
+        "pg-hstore": "^2.3.4",
+        "sequelize": "^6.32.1"
+    }
+}
