@@ -23,16 +23,37 @@ exports.createBootcamp = async(bootcamp) => {
 /* findById */
 // Function to find a bootcamp by its ID in the database
 exports.findById = async(bootcampId) => {
-    // Find the bootcamp record with the given ID in the 'bootcamps' table using the 'Bootcamp' model
-    const bootcamp = await Bootcamp.findByPk(bootcampId);
-    if (!bootcamp) {
-        console.log(`Bootcamp with ID ${bootcampId} not found`);
-        // Return null if the bootcamp with the given ID was not found
+    try {
+        // Find the bootcamp record with the given ID in the 'bootcamps' table using the 'Bootcamp' model
+        const bootcamp = await Bootcamp.findByPk(bootcampId, {
+            // Include the 'users' model in the query
+            include: {
+                model: User,
+                as: 'users', // Alias for the association
+                attributes: [], // Exclude attributes of 'users' model from the result
+            },
+        });
+
+        if (!bootcamp) {
+            console.log(`Bootcamp with ID ${bootcampId} not found`);
+            // Return null if the bootcamp with the given ID was not found
+            return null;
+        }
+
+        // Get the number of users enrolled in the bootcamp
+        const numUsersEnrolled = bootcamp.users.length;
+
+        // Add the number of users enrolled to the bootcamp object
+        bootcamp.dataValues.numUsersEnrolled = numUsersEnrolled;
+
+        // Return the bootcamp object found by its ID with the added property 'numUsersEnrolled'
+        return bootcamp;
+    } catch (err) {
+        console.log('Error finding bootcamp by ID:', err);
+        // Return null if there was an error finding the bootcamp
         return null;
     }
-    // Return the bootcamp object found by its ID
-    return bootcamp;
-}
+};
 
 /* findAll */
 // Function to find all bootcamps including their associated users in the database
