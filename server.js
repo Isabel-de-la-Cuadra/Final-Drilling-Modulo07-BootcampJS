@@ -122,7 +122,7 @@ db.conexion.sync().then(() => {
     //findAllUsersWithBootcamp();
     //updatedUserInformation();
     //deleteUserById();
-    findBootcampByIdWithUsers();
+    //findBootcampByIdWithUsers();
     //findAllBootcampWithUsers()
 })
 
