@@ -27,8 +27,15 @@ exports.addUser = async(bootcampId, userId) => {
 
         // Add the user to the bootcamp
         await bootcamp.addUser(user);
+
+        // Print the information about the user and the bootcamp with asterisks
+        console.log('***************************');
+        console.log(`Agregado el usuario id=${user.id} al bootcamp con id=${bootcamp.id}`);
+        console.log('***************************');
+
         // Log the information about the user and the bootcamp
         console.log(`User ${user.firstName} ${user.lastName} added to Bootcamp ${bootcamp.title}`);
+
         // Return true to indicate that the user was successfully added to the bootcamp
         return true;
     } catch (err) {

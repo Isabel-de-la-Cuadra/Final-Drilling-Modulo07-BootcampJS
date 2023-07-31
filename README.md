@@ -7,7 +7,14 @@ Este proyecto es para evaluar los conocimientos adquiridos en el Módulo 7: Acce
 ¿Qué lenguajes se usan?
 En el desarrollo aplico JS.
 
+¿Qué gestor de base de datos uso?
+Uso Postgres.
+
 ¿Cómo funciona?
+1. Crear una base de datos llamada db_bootcamp
+2. Clonar el repositorio
+3. En el archivo db.config.js colocar el usuario y la contraseña que corresponda (está como postgres, postgres)
+4. Descomentar las llamadas a las funciones dentro del bloque then() que se ejecuta después de la sincronización de la conexión de db.conexion, para que se ejecuten las funciones solicitadas.
 
 ¿Dónde está el repositorio en GitHub del código?
 El repositorio en GitHub está en https://github.com/Isabel-de-la-Cuadra/Final-Drilling-Modulo07-BootcampJS
@@ -228,7 +235,6 @@ Realizar las siguientes consultas:
 • Listar todos los Bootcamp con sus usuarios.
 • Consultar un usuario por id, incluyendo los Bootcamp.
 • Listar los usuarios con sus Bootcamp.
-• Actualizar el usuario según su id; por ejemplo: actualizar el usuario con id=1 por Pedro
-Sánchez.
+• Actualizar el usuario según su id; por ejemplo: actualizar el usuario con id=1 por Pedro Sánchez.
 • Eliminar un usuario por id; por ejemplo: el usuario con id=1.
 
