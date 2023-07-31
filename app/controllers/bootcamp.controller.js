@@ -26,27 +26,23 @@ exports.findById = async(bootcampId) => {
     try {
         // Find the bootcamp record with the given ID in the 'bootcamps' table using the 'Bootcamp' model
         const bootcamp = await Bootcamp.findByPk(bootcampId, {
-            // Include the 'users' model in the query
-            include: {
+            // Specify the attributes of the bootcamps to include in the result
+            attributes: ['title'],
+            // Include the 'users' model in the query and get the firstName and lastName attributes of users
+            include: [{
                 model: User,
                 as: 'users', // Alias for the association
-                attributes: [], // Exclude attributes of 'users' model from the result
-            },
+                attributes: ['firstName', 'lastName'], // Include firstName and lastName attributes of 'users' model
+                // Do not include the association attributes in the result
+                through: { attributes: [] }
+            }, ],
         });
 
         if (!bootcamp) {
-            console.log(`Bootcamp with ID ${bootcampId} not found`);
-            // Return null if the bootcamp with the given ID was not found
-            return null;
+            throw new Error(`Bootcamp with ID ${bootcampId} not found`);
         }
 
-        // Get the number of users enrolled in the bootcamp
-        const numUsersEnrolled = bootcamp.users.length;
-
-        // Add the number of users enrolled to the bootcamp object
-        bootcamp.dataValues.numUsersEnrolled = numUsersEnrolled;
-
-        // Return the bootcamp object found by its ID with the added property 'numUsersEnrolled'
+        // Return the bootcamp object found by its ID with the users' firstName and lastName attributes
         return bootcamp;
     } catch (err) {
         console.log('Error finding bootcamp by ID:', err);

@@ -41,8 +41,8 @@ exports.findUserById = async(userId) => {
             // Include only the 'title' attribute of the bootcamp
             attributes: ['title'],
             through: {
-                // Include the join table attributes
-                attributes: ['user_id', 'bootcamp_id']
+                // Exclude the join table attributes
+                attributes: []
             }
         }]
     });

@@ -63,7 +63,7 @@ const updatedUserInformation = async() => {
     const query_03 = await userController.updateUserById(userId, updatedUserInformation)
     if (query_03) {
         // If the update was successful, print the new value of the user
-        console.log(`New value of user with ID ${userId}: `, updatedUserInfo);
+        console.log(`New value of user with ID ${userId}: `, updatedUserInformation);
     } else {
         console.log(`Failed to update user with ID ${userId}`);
     }
@@ -90,12 +90,10 @@ const findBootcampByIdWithUsers = async() => {
     // Call the 'findById' function from the bootcamp controller to get the bootcamp by its ID
     const query_05 = await bootcampController.findById(bootcampId);
     if (query_05) {
-        // If the bootcamp is found, print its information and the number of users enrolled
+        // If the bootcamp is found, print its information and the users enrolled
         console.log(`Bootcamp with ID ${bootcampId}:`);
         // Print the bootcamp information with indentation for readability
         console.log(JSON.stringify(query_05, null, 4));
-        // Print number of users for bootcamp
-        console.log(`The number of users enrolled is: ${query_05.numUsersEnrolled}`);
     } else {
         // If the bootcamp is not found, print a message indicating that it was not found
         console.log(`Bootcamp with ID ${bootcampId} is not found.`);
@@ -117,15 +115,15 @@ const findAllBootcampWithUsers = async() => {
 
 // Synchronize the database and execute the queries
 db.conexion.sync().then(() => {
-    createUser();
-    createBootcamp();
-    createEnrollment();
-    findUserByIdWithBootcamp();
-    findAllUsersWithBootcamp();
-    updatedUserInformation();
-    deleteUserById();
+    //createUser();
+    //createBootcamp();
+    //createEnrollment();
+    //findUserByIdWithBootcamp();
+    //findAllUsersWithBootcamp();
+    //updatedUserInformation();
+    //deleteUserById();
     findBootcampByIdWithUsers();
-    findAllBootcampWithUsers()
+    //findAllBootcampWithUsers()
 })
 
 /*
